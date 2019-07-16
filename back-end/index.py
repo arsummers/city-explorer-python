@@ -8,16 +8,16 @@ import requests
 from dotenv import load_dotenv
 load_dotenv()
 
-# used to access the geocode API key in my hidden .env file. Keeping these global so they can be easily accessed below as needed.
-
-GEOCODE_API_KEY = os.getenv('GEOCODE_API_KEY')
+# used to access items in my hidden .env file. Keeping these global so they can be easily accessed below as needed.
 PORT = os.getenv('PORT')
+GEOCODE_API_KEY = os.getenv('GEOCODE_API_KEY')
 
 # builds from both classes in the class demo - if I incorporate more APIS, I will have more classes.
 class Locations():
     def __init__(self, url, query):
         self.url = url
         self.get_data_for_location(url)
+        self.search_query = query
 
 
     def get_data_for_location(self, url):
@@ -25,6 +25,8 @@ class Locations():
 
         # Digs into the JSON object the API gave back to me via postman
         # Works a lot like the dot notation I used to dig into the same API when I did city explorer in javascript
+        # JSON comes out looking like a dictionary full of lists, so I was able to access it like able to access it like I would a dictionary full of lists.
+
 
         self.formatted_query = result['results'][0]['formatted_address']
 
@@ -64,7 +66,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
             print('formatted query: ', formatted_query)
 
-            json_string = json.dumps(location.serialize())
+            # the indent helps with the formatting - instead of getting a long line of json objects, they'll be nicely organized onto their own lines. The sort_keys puts everything into alphabetical order
+            json_string = json.dumps(location.serialize(), indent=4, sort_keys=True)
+
             print(json_string.encode())
             self.wfile.write(json_string.encode())
             return
