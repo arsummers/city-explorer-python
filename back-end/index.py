@@ -8,6 +8,60 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
+class Locations():
+    def __init__(self, url, query):
+        self.url = url
+        self.get_data_for_location(url)
+
+
+    def get_data_for_location(self, url):
+        result = requests.get(url).json()
+        self.formatted_query = 'THINGS'
+        self.latitude = 'THINGS'
+        self.longitude = 'THING'
+
+
+    def serialize(self):
+        return vars(self)
+
+
+
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        parsed_path = urlparse(self.path)
+        print('request path', parsed_path)
+        print('parsed query', parse_qs)
+
+    if parsed_path.path == '/locations':
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+
+        query = 'barcelona'
+        # GEOCODE_API_KEY = os.getenv('GEOCODE_API_KEY')
+        url = f'https://maps.googleapis.com/maps/api/geocode/json?address={query}&key={GEOCODE_API_KEY}'
+        print('geocode url', url)
+
+        result = requests.get(url).json()
+
+        formatted_query = result['results'][0]['formatted_address']
+
+        print('formatted query: ', formatted_query)
+
+        json_string = json.dumps(location.serialize())
+        print(json_string.encode())
+        self.wfile.write(json_string.encode())
+        return
+
+    self.send_response_only(404)
+    self.end_headers()
+
+
+
+
+
 # create server environment
 def create_server():
     return HTTPServer(
