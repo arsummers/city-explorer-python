@@ -17,9 +17,9 @@ class Locations():
 
     def get_data_for_location(self, url):
         result = requests.get(url).json()
-        self.formatted_query = 'THINGS'
-        self.latitude = 'THINGS'
-        self.longitude = 'THING'
+        self.formatted_query = result['results'][0]['formatted_adress']
+        self.latitude = result['results'][0]['geometry']['location']['lat']
+        self.longitude = result['results'][0]['geometry']['location']['lat']
 
 
     def serialize(self):
@@ -40,7 +40,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
         query = 'barcelona'
-        # GEOCODE_API_KEY = os.getenv('GEOCODE_API_KEY')
+        # used to access the geocode API key in my hidden .env file
+        GEOCODE_API_KEY = os.getenv('GEOCODE_API_KEY')
         url = f'https://maps.googleapis.com/maps/api/geocode/json?address={query}&key={GEOCODE_API_KEY}'
         print('geocode url', url)
 
