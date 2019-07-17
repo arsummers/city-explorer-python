@@ -1,6 +1,3 @@
-
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from urllib.parse import urlparse, parse_qs
 import os
 import json
 from flask import Flask, jsonify, request
@@ -27,7 +24,11 @@ def new_location():
 @app.route('/weather', methods=['GET'])
 def weather():
 
-    latitude = request.args.get('data["latitude"]')
-    longitude = request.args.get('data["longitude"]')
+    latitude = request.args.get('data[latitude]')
+    print(f'*********INIT LATITUDE {latitude} *********************')
+    # print(f'***************************REQUEST ARGS {request.args}')
 
-    return Forecast.fetch(latitude, longitude)
+    longitude = request.args.get('data[longitude]')
+
+
+    return Forecast.fetch_weather(latitude, longitude)
