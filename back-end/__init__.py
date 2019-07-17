@@ -1,6 +1,12 @@
+
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse, parse_qs
+import os
+import json
 from flask import Flask, jsonify, request
 import requests
-from models.locations import Location
+# from back-end.models.locations import Location
+from .models.locations import Location
 from flask_cors import CORS
 
 
@@ -8,14 +14,19 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/location')
-def location():
-    print(request.args.get('data'))
-    data = Location.fetch('barcelona')
-    return jsonify(data)
+@app.route('/location', methods=['GET'])
+def new_location():
+    breakpoint()
+
+
+    query_name = request.args.get('data')
+    data = Location.fetch(query_name)
+    return data
 
 
 
+# in init
+    #
 
 # from http.server import BaseHTTPRequestHandler, HTTPServer
 # from urllib.parse import urlparse, parse_qs
@@ -56,7 +67,7 @@ def location():
 #             query = parsed_query_string['data'][0]
 
 #             url = f'https://maps.googleapis.com/maps/api/geocode/json?address={query}&key={GEOCODE_API_KEY}'
-#             location = Locations(url, query)
+#             location = Location(url, query)
 #             print('geocode url', url)
 
 #             result = requests.get(url).json()
@@ -97,5 +108,3 @@ def location():
 
 # if __name__ == "__main__":
 #     run_forever()
-
-
