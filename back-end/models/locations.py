@@ -1,14 +1,10 @@
-# from os import environ
-# import json
-# import requests
+from os import environ
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import os
 import json
 from flask import Flask, jsonify, request
 import requests
-# from back-end.models.locations import Location
-# from models.locations import Location
 from flask_cors import CORS
 
 
@@ -42,6 +38,7 @@ gets the geocode data for the searched location, returns it as a json object
         new_location = Location(query, locations['results'][0])
 
         return json.dumps(new_location.serialize())
+
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
