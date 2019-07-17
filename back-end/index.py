@@ -1,9 +1,20 @@
 from flask import Flask, jsonify, request
 import requests
-from models.locations import Locations
+from models.locations import Location
 from flask_cors import CORS
 
+
+
 app = Flask(__name__)
+CORS(app)
+
+@app.route('/location')
+def location():
+    print(request.args.get('data'))
+    data = Location.fetch('barcelona')
+    return jsonify(data)
+
+
 
 
 # from http.server import BaseHTTPRequestHandler, HTTPServer
