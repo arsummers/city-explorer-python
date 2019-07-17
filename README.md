@@ -2,11 +2,13 @@
 # author: Aliya Summers, Code Fellows staff
 
 ## Problem Domain
-Take the solution code for the city explorer app, as it it was originally written in Code 301 in Javascript, and start converting it to Python.
+Take the solution code for the city explorer app, as it it was originally written in Code 301 in Javascript, and start converting it to Python, using the flask framework.
 
 # Approach
 
 I built off the class demo to make the server, and took inspiration from my past experience with city explorer and the official javascript solution to plan out my approach to the structure of the app.
+
+Thank you to our TA James, who helped me figure out how to test this in my browser and console, and helped me get the locations feature to take in a search parameter.
 
 # Resources
 Class demo for server building: ![here](https://github.com/codefellows/seattle-python-401d12/blob/master/class-06/demos/http-snacks/index.py)
@@ -23,6 +25,8 @@ os
 json
 requests
 dotenv: load_dotenv
+flask_cors
+flask: Flask, jsonify, request
 
 You will also need to pipenv install dotenv and requests
 
