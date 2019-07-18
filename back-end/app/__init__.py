@@ -51,5 +51,26 @@ def weather():
 
     return Forecast.fetch_weather(latitude, longitude)
 
+@app.route('/yelp', methods=['GET'])
+def yelp():
+    reached_app = 'You have reached the yelp route'
+    return reached_app
+
+@app.route('/movies', methods=['GET'])
+def movies():
+    reached_app = 'You have reached the movies route'
+    return reached_app
+
+@app.route('/events', methods=['GET'])
+def events():
+    reached_app = 'You have reached the events route'
+    return reached_app
+
+@app.route('/trails', methods=['GET'])
+def trails():
+    reached_app = 'You have reached the trail route'
+    return reached_app
+
+
 
 from app.models.models import LocationsModel
