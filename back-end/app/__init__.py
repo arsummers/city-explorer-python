@@ -27,7 +27,7 @@ def new_location():
     return data
 
 
-@app.route('/testdb')
+@app.route('/test-location-db')
 def test_loc_db():
 
     newlocation = LocationsModel(name='seattle', formatted_query='Seattle, WA, USA', latitude=47.6062095, longitude=-122.3320708)
