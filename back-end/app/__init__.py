@@ -4,6 +4,10 @@ from flask import Flask, jsonify, request
 import requests
 from .models.locations import Location
 from .models.weathers import Forecast
+from .models.movies import Movies
+from .models.events import Events
+from .models.trails import Trails
+from .models.yelp import Yelp
 from flask_cors import CORS
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
