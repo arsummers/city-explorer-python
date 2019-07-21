@@ -25,9 +25,26 @@ def new_location():
 #TODO: check db:
     # if search name not in db, do the API stuff, insert into db
 #if name in db, return the saved values
+    saved_location = Location.query.filter_by(search_query=request.args.get('data')).first()
 
-    query_name = request.args.get('data')
-    data = Location.fetch(query_name)
+    if saved_location:
+        return jsonify(saved_location.convert_to_dict())
+
+    fresh_location = new_location()
+
+    resource = Location(
+        search_query = fresh_location.search_query,
+        formatted_query = fresh_location.formatted_query,
+        latitude = fresh_location.latitude,
+        longitude = fresh_location.longitude
+    )
+
+    db.session.add(resource)
+    db.session.commit()
+    return jsonify(resource.convert_to_dict())
+
+    # query = request.args.get('data')
+    data = Location.fetch_location(query)
     return data
 
 
