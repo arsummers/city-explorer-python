@@ -24,6 +24,8 @@ class Movies():
 
         movies = requests.get(url).json()
 
+        movies_list = [Movies(results).serialize() for results in movies['results']['title']]
 
+        return jsonify(movies_list)
 
 

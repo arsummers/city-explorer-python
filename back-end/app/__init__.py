@@ -22,9 +22,7 @@ migrate = Migrate(app, db)
 
 @app.route('/location', methods=['GET'])
 def new_location():
-#TODO: check db:
-    # if search name not in db, do the API stuff, insert into db
-#if name in db, return the saved values
+
     saved_location = LocationsModel.query.filter_by(search_query=request.args.get('data')).first()
 
     if saved_location:
@@ -39,15 +37,10 @@ def new_location():
         longitude = fresh_location.longitude
     )
 
-    # resource = LocationsModel(**fresh_location)
-
     db.session.add(resource)
     db.session.commit()
     return jsonify(resource.convert_to_dict())
 
-    # query = request.args.get('data')
-    # data = Location.fetch_location(query)
-    # return data
 
 
 @app.route('/test-location-db')
@@ -71,7 +64,6 @@ def weather():
     latitude = request.args.get('data[latitude]')
     longitude = request.args.get('data[longitude]')
 
-
     return Forecast.fetch_weather(latitude, longitude)
 
 @app.route('/yelp', methods=['GET'])
@@ -81,8 +73,16 @@ def yelp():
 
 @app.route('/movies', methods=['GET'])
 def movies():
-    reached_app = 'You have reached the movies route'
-    return reached_app
+
+    # reached_app = 'You have reached the movies route'
+    title = request.args.get('info[title]')
+    overview = request.args.get('info[overview]')
+    average_votes = request.args.get('info[vote_average]')
+    total_votes = info['results']['vote_count']
+    popularity = info['results']['popularity']
+    released_on =
+
+    return Movies.fetch_movies()
 
 @app.route('/events', methods=['GET'])
 def events():

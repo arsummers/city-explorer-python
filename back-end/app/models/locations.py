@@ -8,7 +8,6 @@ import requests
 from flask_cors import CORS
 
 
-# @staticmethod
 def fetch_location():
 
         """
@@ -25,7 +24,6 @@ gets the geocode data for the searched location, returns it as a json object
 
         new_location = Location(query, locations['results'][0])
 
-        # return jsonify(new_location.serialize())
         return new_location
 
 
