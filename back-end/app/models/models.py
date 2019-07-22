@@ -33,13 +33,3 @@ class Forecasts(ModelToDictMixin, db.Model):
     def __repr__(self):
         return f'<Forecast   {self.forecast}>'
 
-
-    # def convert_to_dict(self):
-    #     return {
-    #         'id' : self.id,
-    #         'query' : self.query,
-    #         'formatted_query' : self.formatted_query,
-    #         'latitude' : self.latitude,
-    #         'longitude' : self.longitude
-    #     }
-

@@ -74,15 +74,17 @@ def yelp():
 @app.route('/movies', methods=['GET'])
 def movies():
 
-    # reached_app = 'You have reached the movies route'
-    title = request.args.get('info[title]')
-    overview = request.args.get('info[overview]')
-    average_votes = request.args.get('info[vote_average]')
-    total_votes = info['results']['vote_count']
-    popularity = info['results']['popularity']
-    released_on =
+    # title = request.args.get('info[title]')
+    # overview = request.args.get('info[overview]')
+    # average_votes = request.args.get('info[vote_average]')
+    # total_votes = request.args.get('info[vote_count]')
+    # popularity = request.args.get('info[[popularity]')
+    # released_on =request.args.get('info[released_on]')
 
-    return Movies.fetch_movies()
+    latitude = request.args.get('data[latitude]')
+    longitude = request.args.get('data[longitude]')
+
+    return Movies.fetch_movies(latitude, longitude)
 
 @app.route('/events', methods=['GET'])
 def events():
