@@ -2,7 +2,7 @@ import os
 import json
 from flask import Flask, jsonify, request
 import requests
-from .models.locations import Location
+from .models.locations import Location, fetch_location
 from .models.weathers import Forecast
 from .models.movies import Movies
 from .models.events import Events
@@ -22,13 +22,25 @@ migrate = Migrate(app, db)
 
 @app.route('/location', methods=['GET'])
 def new_location():
-#TODO: check db:
-    # if search name not in db, do the API stuff, insert into db
-#if name in db, return the saved values
 
-    query_name = request.args.get('data')
-    data = Location.fetch(query_name)
-    return data
+    saved_location = LocationsModel.query.filter_by(search_query=request.args.get('data')).first()
+
+    if saved_location:
+        return jsonify(saved_location.convert_to_dict())
+
+    fresh_location = fetch_location()
+
+    resource = LocationsModel(
+        search_query = fresh_location.search_query,
+        formatted_query = fresh_location.formatted_query,
+        latitude = fresh_location.latitude,
+        longitude = fresh_location.longitude
+    )
+
+    db.session.add(resource)
+    db.session.commit()
+    return jsonify(resource.convert_to_dict())
+
 
 
 @app.route('/test-location-db')
@@ -52,7 +64,6 @@ def weather():
     latitude = request.args.get('data[latitude]')
     longitude = request.args.get('data[longitude]')
 
-
     return Forecast.fetch_weather(latitude, longitude)
 
 @app.route('/yelp', methods=['GET'])
@@ -62,8 +73,18 @@ def yelp():
 
 @app.route('/movies', methods=['GET'])
 def movies():
-    reached_app = 'You have reached the movies route'
-    return reached_app
+
+    # title = request.args.get('info[title]')
+    # overview = request.args.get('info[overview]')
+    # average_votes = request.args.get('info[vote_average]')
+    # total_votes = request.args.get('info[vote_count]')
+    # popularity = request.args.get('info[[popularity]')
+    # released_on =request.args.get('info[released_on]')
+
+    latitude = request.args.get('data[latitude]')
+    longitude = request.args.get('data[longitude]')
+
+    return Movies.fetch_movies(latitude, longitude)
 
 @app.route('/events', methods=['GET'])
 def events():
