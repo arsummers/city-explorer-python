@@ -2,7 +2,7 @@ import os
 import json
 from flask import Flask, jsonify, request
 import requests
-from .models.locations import Location
+from .models.locations import Location, fetch_location
 from .models.weathers import Forecast
 from .models.movies import Movies
 from .models.events import Events
@@ -25,27 +25,29 @@ def new_location():
 #TODO: check db:
     # if search name not in db, do the API stuff, insert into db
 #if name in db, return the saved values
-    saved_location = Location.query.filter_by(search_query=request.args.get('data')).first()
+    saved_location = LocationsModel.query.filter_by(search_query=request.args.get('data')).first()
 
     if saved_location:
         return jsonify(saved_location.convert_to_dict())
 
-    fresh_location = new_location()
+    fresh_location = fetch_location()
 
-    resource = Location(
+    resource = LocationsModel(
         search_query = fresh_location.search_query,
         formatted_query = fresh_location.formatted_query,
         latitude = fresh_location.latitude,
         longitude = fresh_location.longitude
     )
 
+    # resource = LocationsModel(**fresh_location)
+
     db.session.add(resource)
     db.session.commit()
     return jsonify(resource.convert_to_dict())
 
     # query = request.args.get('data')
-    data = Location.fetch_location(query)
-    return data
+    # data = Location.fetch_location(query)
+    # return data
 
 
 @app.route('/test-location-db')

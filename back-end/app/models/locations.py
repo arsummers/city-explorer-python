@@ -8,8 +8,8 @@ import requests
 from flask_cors import CORS
 
 
-@staticmethod
-def fetch_location(query):
+# @staticmethod
+def fetch_location():
 
         """
 gets the geocode data for the searched location, returns it as a json object
@@ -30,8 +30,8 @@ gets the geocode data for the searched location, returns it as a json object
 
 
 class Location():
-    def __init__(self, search_query, query_result):
-        self.search_query = search_query
+    def __init__(self, query, query_result):
+        self.search_query = query
         self.formatted_query = query_result['formatted_address']
         self.latitude = query_result['geometry']['location']['lat']
         self.longitude = query_result['geometry']['location']['lng']
